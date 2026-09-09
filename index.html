@@ -1,0 +1,1473 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Compendio — Corporación Universitaria Americana</title>
+<link rel="icon" type="image/png" href="logoAmericana.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Source+Sans+3:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root{
+    --paper:#F8FAFC;
+    --surface:#FFFFFF;
+    --surface-2:#F1F5F9;
+    --line:#E2E8F0;
+    --ink:#0F172A;
+    --ink-soft:#475569;
+    --spine:#002D9C;
+    --spine-strong:#001F6E;
+    --spine-tint:#EEF4FF;
+    --marker:#F6BE3D;
+    --marker-tint:#FFF8E6;
+    --good:#00875A;
+    --good-tint:#E3FCEF;
+    --bad:#D92D20;
+    --bad-tint:#FEE4E2;
+    --shadow: 0 1px 3px rgba(15, 23, 42, 0.05), 0 8px 24px -8px rgba(0, 45, 156, 0.07);
+  }
+
+  :root[data-theme="dark"]{
+    --paper:#090D16;
+    --surface:#0F1726;
+    --surface-2:#162034;
+    --line:#212F48;
+    --ink:#F8FAFC;
+    --ink-soft:#94A3B8;
+    --spine:#3B82F6;
+    --spine-strong:#60A5FA;
+    --spine-tint:rgba(59, 130, 246, 0.15);
+    --marker:#F6BE3D;
+    --marker-tint:rgba(246, 190, 61, 0.15);
+    --good:#34D399;
+    --good-tint:rgba(52, 211, 153, 0.15);
+    --bad:#F87171;
+    --bad-tint:rgba(248, 113, 113, 0.15);
+    --shadow: 0 4px 20px -2px rgba(0,0,0,0.5);
+  }
+  *{box-sizing:border-box;}
+  body{ margin:0; background:var(--paper); color:var(--ink); font-family:"Source Sans 3", ui-sans-serif, system-ui, sans-serif; font-size:16px; line-height:1.5; }
+  ::selection{ background:var(--marker-tint); color:var(--ink); }
+  .wrap{ max-width:1180px; margin:0 auto; padding: 28px 20px 64px; }
+
+  header.hero{ display:flex; flex-direction:column; gap:14px; padding: 4px 0 26px; border-bottom: 1px solid var(--line); margin-bottom: 26px; }
+  .hero-top-row{ display:flex; align-items:center; justify-content:space-between; gap:16px; padding-bottom:12px; border-bottom: 1px solid var(--line); }
+  .brand-link{ display:inline-flex; align-items:center; text-decoration:none; }
+  .brand-logo{ height:54px; width:auto; display:block; object-fit:contain; }
+  .brand-logo-dark{ display:none; }
+  :root[data-theme="dark"] .brand-logo-light{ display:none; }
+  :root[data-theme="dark"] .brand-logo-dark{ display:block; }
+  .theme-toggle-btn{ background:var(--surface); border:1px solid var(--line); color:var(--ink-soft); border-radius:8px; padding:7px 14px; font-family:"Source Sans 3", sans-serif; font-size:13.5px; font-weight:600; cursor:pointer; transition:all .15s ease; box-shadow:0 1px 2px rgba(0,0,0,0.04); }
+  .theme-toggle-btn:hover{ border-color:var(--spine); color:var(--spine); background:var(--surface-2); }
+  .eyebrow{ font-family:"IBM Plex Mono", ui-monospace, monospace; font-size:12.5px; letter-spacing:.09em; text-transform:uppercase; color:var(--spine); font-weight:500; display:flex; align-items:center; gap:8px;padding-top: 30px; }
+  .eyebrow .dot{ width:6px;height:6px;border-radius:50%;background:var(--marker); display:inline-block; }
+  h1{ font-family:"Fraunces", Georgia, serif; font-optical-sizing:auto; font-weight:600; font-size:clamp(30px, 4vw, 44px); line-height:1.05; margin:0; text-wrap:balance; color:var(--ink); }
+  h1 em{ font-style:italic; font-weight:500; color:var(--spine); }
+  .lede{ max-width:62ch; color:var(--ink-soft); font-size:16.5px; }
+  .context-line{ font-size:13.5px; color:var(--ink-soft); font-family:"IBM Plex Mono", ui-monospace, monospace; }
+
+  .layout{ display:grid; grid-template-columns: 320px 1fr; gap: 24px; align-items:start; min-width:0; }
+  .layout > *{ min-width:0; }
+  @media (max-width: 900px){ .layout{ grid-template-columns: 1fr; } }
+
+  .card{ background:var(--surface); border:1px solid var(--line); border-radius:14px; box-shadow:var(--shadow); }
+
+  .intake{ padding:20px; display:flex; flex-direction:column; gap:16px; position:sticky; top:20px; }
+  @media (max-width: 900px){ .intake{ position:static; top:auto; } }
+  .intake h2{ font-family:"Fraunces", serif; font-weight:600; font-size:18px; margin:0; }
+  label.field{ display:flex; flex-direction:column; gap:6px; font-size:13.5px; color:var(--ink-soft); font-weight:500; }
+  input[type="text"], textarea{ font-family:inherit; font-size:14.5px; color:var(--ink); background:var(--surface-2); border:1px solid var(--line); border-radius:9px; padding:9px 11px; width:100%; resize:vertical; }
+  input[type="text"]:focus, textarea:focus, button:focus-visible, .droparea:focus-visible{ outline:2px solid var(--spine); outline-offset:2px; }
+  textarea#sourceText{ min-height:150px; font-size:13.5px; line-height:1.45; }
+
+  .droparea{ border:1.5px dashed var(--line); border-radius:10px; padding:16px; display:flex; flex-direction:column; align-items:center; gap:6px; text-align:center; cursor:pointer; background:var(--surface-2); transition:border-color .15s, background .15s; }
+  .droparea:hover, .droparea.drag{ border-color:var(--spine); background:var(--spine-tint); }
+  .droparea .ic{ font-size:20px; }
+  .droparea .hint{ font-size:12px; color:var(--ink-soft); }
+  .droparea strong{ font-size:13.5px; }
+  #fileInput{ display:none; }
+
+  #extractStatus{ font-size:12.5px; font-family:"IBM Plex Mono",monospace; min-height:16px; }
+  #extractStatus.ok{ color:var(--good); }
+  #extractStatus.err{ color:var(--bad); }
+
+  button.primary{ font-family:"Source Sans 3", sans-serif; font-weight:600; font-size:15px; background:var(--spine); color:#FBF4F1; border:none; border-radius:9px; padding:11px 16px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; transition: background .15s, transform .05s; }
+  button.primary:hover{ background:var(--spine-strong); }
+  button.primary:active{ transform:translateY(1px); }
+  button.primary:disabled{ opacity:.55; cursor:not-allowed; }
+  button.ghost{ font-family:"Source Sans 3", sans-serif; font-weight:600; font-size:13.5px; background:transparent; color:var(--spine); border:1px solid var(--line); border-radius:9px; padding:8px 13px; cursor:pointer; }
+  button.ghost:hover{ border-color:var(--spine); }
+  button.iconBtn{ display:flex; align-items:center; justify-content:center; width:34px; height:34px; padding:0; background:transparent; border:1px solid transparent; border-radius:9px; color:var(--ink-soft); cursor:pointer; flex-shrink:0; }
+  button.iconBtn:hover{ background:var(--surface); border-color:var(--line); color:var(--ink); }
+  button.iconBtn.danger:hover{ background:var(--bad-tint); border-color:var(--bad); color:var(--bad); }
+  button.iconBtn:disabled{ opacity:.4; cursor:not-allowed; }
+  button.ghost:disabled{ opacity:.5; cursor:not-allowed; }
+
+  .spinner{ width:14px; height:14px; border-radius:50%; border:2px solid rgba(255,255,255,.4); border-top-color:#fff; animation: spin .7s linear infinite; }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce){ .spinner{ animation:none; } }
+
+  .note{ font-size:12px; color:var(--ink-soft); line-height:1.45; }
+
+  .results{ display:flex; flex-direction:column; gap:18px; }
+  .badge{ font-family:"IBM Plex Mono", monospace; font-size:11px; letter-spacing:.04em; text-transform:uppercase; padding:3px 8px; border-radius:99px; font-weight:500; }
+  .badge.example{ background:var(--surface-2); color:var(--ink-soft); border:1px solid var(--line); }
+  .badge.generated{ background:var(--good-tint); color:var(--good); }
+  .badge.library{ background:var(--marker-tint); color:var(--marker); }
+
+  .statstrip{ display:grid; grid-template-columns: repeat(4,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:14px; overflow:hidden; }
+  @media (max-width:640px){ .statstrip{ grid-template-columns: repeat(2,1fr); } }
+  .stat{ background:var(--surface); padding:14px 16px; display:flex; flex-direction:column; gap:2px; }
+  .stat .num{ font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums; font-size:22px; font-weight:500; color:var(--spine); }
+  .stat .lbl{ font-size:12px; color:var(--ink-soft); }
+
+  .resultHead{ display:flex; align-items:baseline; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+  .resultHead h2{ font-family:"Fraunces",serif; font-weight:600; font-size:22px; margin:0; }
+
+  .tabs{ display:flex; row-gap:6px; column-gap:4px; border-bottom:1px solid var(--line); flex-wrap:wrap; }
+  .tab{ font-family:"Source Sans 3",sans-serif; font-weight:600; font-size:13.5px; color:var(--ink-soft); background:none; border:none; padding:9px 4px; margin-right:14px; cursor:pointer; position:relative; }
+  .tab .n{ font-family:"IBM Plex Mono",monospace; font-size:11px; color:var(--ink-soft); margin-left:4px; }
+  .tab.active{ color:var(--spine); }
+  .tab.active::after{ content:""; position:absolute; left:0; right:14px; bottom:-1px; height:2px; background:var(--spine); border-radius:2px; }
+
+  .panel{ display:none; padding:18px 4px 4px; }
+  .panel.active{ display:block; }
+
+  p.summary{ font-size:16px; color:var(--ink); max-width:70ch; }
+
+  details.chapter{ background:var(--surface); border:1px solid var(--line); border-radius:11px; padding:0; margin-bottom:10px; }
+  details.chapter summary{ cursor:pointer; padding:13px 16px; font-weight:600; font-family:"Fraunces",serif; font-size:16px; list-style:none; display:flex; align-items:center; gap:10px; }
+  details.chapter summary::-webkit-details-marker{ display:none; }
+  details.chapter summary::before{ content:"›"; font-family:"IBM Plex Mono",monospace; color:var(--spine); transition:transform .15s; display:inline-block; }
+  details.chapter[open] summary::before{ transform:rotate(90deg); }
+  .chapterBody{ padding:0 16px 15px 40px; color:var(--ink-soft); font-size:14.5px; }
+  .chapterBody .concepts{ display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
+  .chip{ background:var(--marker-tint); color:var(--ink); border-radius:99px; padding:3px 10px; font-size:12.5px; }
+
+  .glossaryGrid{ display:grid; grid-template-columns:1fr 1fr; gap:10px 20px; }
+  @media (max-width:700px){ .glossaryGrid{ grid-template-columns:1fr; } }
+  .term{ border-bottom:1px solid var(--line); padding:8px 0; }
+  .term dt{ font-family:"Fraunces",serif; font-weight:600; font-size:14.5px; color:var(--spine); }
+  .term dd{ margin:2px 0 0; font-size:13.5px; color:var(--ink-soft); }
+
+  .patternCard{ background:var(--surface); border:1px solid var(--line); border-left:3px solid var(--marker); border-radius:0 11px 11px 0; padding:12px 15px; margin-bottom:10px; }
+  .patternCard h3{ margin:0 0 3px; font-family:"Fraunces",serif; font-size:15px; }
+  .patternCard p{ margin:0; font-size:13.5px; color:var(--ink-soft); }
+
+  ul.cheat{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:8px; }
+  ul.cheat li{ display:flex; gap:10px; align-items:flex-start; font-size:14.5px; }
+  ul.cheat li::before{ content:"✓"; color:var(--good); font-weight:700; flex-shrink:0; }
+
+  .quizWrap{ max-width:64ch; }
+  .quizProgress{ font-family:"IBM Plex Mono",monospace; font-size:12.5px; color:var(--ink-soft); margin-bottom:10px; }
+  .quizQ{ font-family:"Fraunces",serif; font-size:17px; font-weight:600; margin:0 0 12px; text-wrap:balance; }
+  .quizOpts{ display:flex; flex-direction:column; gap:8px; }
+  .quizOpt{ text-align:left; font-family:"Source Sans 3",sans-serif; font-size:14.5px; background:var(--surface); border:1px solid var(--line); border-radius:9px; padding:10px 13px; cursor:pointer; }
+  .quizOpt:hover{ border-color:var(--spine); }
+  .quizOpt.correct{ background:var(--good-tint); border-color:var(--good); }
+  .quizOpt.wrong{ background:var(--bad-tint); border-color:var(--bad); }
+  .quizExpl{ font-size:13.5px; color:var(--ink-soft); background:var(--surface-2); border-radius:9px; padding:10px 13px; margin-top:12px; }
+  .quizNav{ display:flex; justify-content:space-between; align-items:center; margin-top:16px; }
+  .quizScore{ font-family:"IBM Plex Mono",monospace; font-size:13px; }
+
+  .empty-ai{ font-size:13px; color:var(--ink-soft); background:var(--surface-2); border:1px dashed var(--line); border-radius:9px; padding:12px; }
+
+  .chatBox{ display:flex; flex-direction:column; gap:10px; max-height:420px; overflow-y:auto; padding:4px 2px 10px; }
+  .chatEmpty{ font-size:13.5px; color:var(--ink-soft); background:var(--surface-2); border:1px dashed var(--line); border-radius:9px; padding:12px; max-width:56ch; }
+  .chatMsg{ max-width:70%; padding:9px 13px; border-radius:12px; font-size:14.5px; line-height:1.45; white-space:pre-wrap; }
+  .chatMsg.user{ align-self:flex-end; background:var(--spine); color:#FBF4F1; border-bottom-right-radius:3px; }
+  .chatMsg.assistant{ align-self:flex-start; background:var(--surface-2); border:1px solid var(--line); border-bottom-left-radius:3px; }
+  .chatMsg.assistant.thinking{ color:var(--ink-soft); font-style:italic; }
+  .chatInputRow{ display:flex; gap:8px; margin-top:6px; }
+  .chatInputRow input{ flex:1; font-family:inherit; font-size:14.5px; background:var(--surface-2); border:1px solid var(--line); border-radius:9px; padding:9px 12px; color:var(--ink); }
+  .chatInputRow button{ padding:9px 16px; }
+  .chatCite{ margin-top:8px; padding:8px 11px; border-left:2px solid var(--marker); background:var(--marker-tint); border-radius:0 8px 8px 0; font-size:13px; font-style:italic; color:var(--ink-soft); }
+  .chatChips{ display:flex; flex-wrap:wrap; gap:7px; margin:10px 0; }
+  .chip-btn{ font-family:"Source Sans 3",sans-serif; font-size:13px; font-weight:500; background:var(--surface-2); border:1px solid var(--line); color:var(--ink-soft); border-radius:99px; padding:6px 12px; cursor:pointer; }
+  .chip-btn:hover{ border-color:var(--spine); color:var(--spine); }
+
+  .mapWrap{ overflow-x:auto; }
+  .mapWrap svg{ display:block; margin:0 auto; max-width:100%; height:auto; }
+  .mapNodeTitle{ font-family:"Fraunces",serif; font-weight:600; }
+  .mapNodeChapter{ font-family:"Source Sans 3",sans-serif; font-weight:600; }
+  .mapNodeConcept{ font-family:"Source Sans 3",sans-serif; font-weight:500; }
+
+  .terrLayout{ display:grid; grid-template-columns:1fr 300px; gap:16px; align-items:start; }
+  @media (max-width:880px){ .terrLayout{ grid-template-columns:1fr; } }
+  .terrGraphCard{ position:relative; border-radius:16px; overflow:hidden; border:1px solid var(--line); box-shadow:var(--shadow); background:#100E0A; }
+  .terrGraphCard svg{ display:block; width:100%; height:auto; aspect-ratio:900/560; cursor:grab; user-select:none; -webkit-user-select:none; touch-action:none; }
+  .terrGraphCard svg *{ -webkit-user-drag:none; }
+  #terrSvg .node{ transition:opacity .15s; }
+  #terrSvg .node.dim{ opacity:.16; }
+  #terrSvg .node.selected circle, #terrSvg .node.selected path{ stroke:#FBF8EF; stroke-width:2.5px; }
+  .terrHint{ position:absolute; left:14px; bottom:11px; font-family:"IBM Plex Mono",monospace; font-size:11px; color:#B8AF9C; opacity:.75; letter-spacing:.02em; }
+  .resetViewBtn{ position:absolute; right:14px; bottom:11px; font-family:"Source Sans 3",sans-serif; font-weight:600; font-size:12px; background:rgba(251,248,239,.08); color:#EAE7D8; border:1px solid rgba(251,248,239,.18); border-radius:8px; padding:6px 11px; cursor:pointer; }
+  .resetViewBtn:hover{ background:rgba(251,248,239,.16); }
+  .terrLegend{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px; }
+  .terrLegendChip{ display:flex; align-items:center; gap:7px; font-family:"Source Sans 3",sans-serif; font-size:13px; font-weight:600; background:var(--surface); border:1px solid var(--line); border-radius:99px; padding:6px 12px 6px 8px; cursor:pointer; color:var(--ink); user-select:none; transition:opacity .15s, border-color .15s; }
+  .terrLegendChip .flag{ width:13px; height:9px; border-radius:1.5px; flex-shrink:0; box-shadow:0 0 0 1px rgba(0,0,0,.25) inset; }
+  .terrLegendChip .ct{ font-family:"IBM Plex Mono",monospace; color:var(--ink-soft); font-weight:400; }
+  .terrLegendChip.dim{ opacity:.4; }
+  .terrLegendChip.bridgeChip .flag{ background:repeating-linear-gradient(45deg,#F3E3BE,#F3E3BE 3px,#C98A1E 3px,#C98A1E 6px); }
+  .terrPanel .panelEmpty{ color:var(--ink-soft); font-size:13.5px; }
+  .terrPanel .panelBook{ display:inline-flex; align-items:center; gap:6px; font-family:"IBM Plex Mono",monospace; font-size:11px; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-soft); }
+  .terrPanel .panelBook .flag{ width:12px; height:8px; border-radius:1.5px; box-shadow:0 0 0 1px rgba(0,0,0,.25) inset; }
+  .terrPanel .panelTerm{ font-family:"Fraunces",serif; font-weight:600; font-size:20px; line-height:1.15; text-wrap:balance; margin:8px 0 0; }
+  .terrPanel .panelDef{ font-size:14px; color:var(--ink-soft); margin:6px 0 0; }
+  .terrPanel .panelSource{ font-size:12.5px; color:var(--ink-soft); background:var(--surface-2); border-radius:9px; padding:9px 11px; margin-top:8px; }
+  .terrPanel .bridgeNote{ font-size:13px; background:var(--marker-tint); border-left:3px solid var(--marker); border-radius:0 9px 9px 0; padding:9px 12px; color:var(--ink); margin-top:8px; }
+  .terrPanel .bridgeNote strong{ color:var(--spine); }
+  .terrPanel .relList{ display:flex; flex-direction:column; gap:6px; margin-top:8px; }
+  .terrPanel .relItem{ display:flex; align-items:center; justify-content:space-between; gap:8px; font-size:12.5px; padding:6px 9px; border-radius:8px; background:var(--surface-2); cursor:pointer; }
+  .terrPanel .relItem:hover{ background:var(--spine-tint); }
+  .terrPanel .relItem .flag{ width:10px; height:7px; border-radius:1.5px; flex-shrink:0; margin-right:6px; box-shadow:0 0 0 1px rgba(0,0,0,.25) inset; }
+  .terrPanel .openBookBtn{ margin-top:10px; }
+  .terrEmpty{ padding:40px 20px; text-align:center; color:#B8AF9C; font-size:13.5px; }
+
+  .libraryList{ display:flex; flex-direction:column; gap:8px; }
+  .libItem{ display:flex; align-items:center; gap:12px; background:var(--surface-2); border:1px solid var(--line); border-radius:10px; padding:10px 13px; }
+  .libItem .libInfo{ display:flex; flex-direction:column; gap:1px; flex:1; min-width:0; }
+  .libItem .libTitle{ font-family:"Fraunces",serif; font-weight:600; font-size:14.5px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .libItem .libMeta{ font-size:12px; color:var(--ink-soft); font-family:"IBM Plex Mono",monospace; }
+  .libItem .libActions{ display:flex; gap:6px; flex-shrink:0; }
+  .libEmpty{ font-size:13px; color:var(--ink-soft); }
+
+  .errBox{ font-size:13.5px; color:var(--bad); background:var(--bad-tint); border-radius:9px; padding:10px 13px; }
+
+  footer.foot{ margin-top:34px; padding-top:16px; border-top:1px solid var(--line); font-size:12.5px; color:var(--ink-soft); display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px; }
+  footer.foot a{ color: var(--spine); }
+
+  /* Mobile optimizations */
+  @media (max-width:640px){
+    .wrap{ padding: 18px 14px 48px; }
+    .hero-top-row{ gap:10px; padding-bottom:10px; }
+    .brand-logo{ height:38px; }
+    .tabs{ flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:thin; }
+    .tabs::-webkit-scrollbar{ height:3px; }
+    .tab{ white-space:nowrap; margin-right:18px; }
+    .tab:last-child{ margin-right:2px; }
+    button.ghost{ padding:9px 14px; }
+    .quizOpt{ padding:12px 14px; }
+    .chatMsg{ max-width:85%; }
+    .chatInputRow button{ flex-shrink:0; }
+    .libItem{ padding:9px 11px; gap:8px; }
+    .libItem .libTitle{ font-size:13.5px; }
+    .terrGraphCard{ min-height:220px; }
+    footer.foot{ font-size:11.5px; justify-content:center; text-align:center; }
+  }
+  @media (max-width:420px){
+    .brand-logo{ height:32px; }
+    .tab{ font-size:12.5px; margin-right:14px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="hero-top-row">
+      <a href="#" class="brand-link" title="Corporación Universitaria Americana">
+        <img src="americana_logo_tight.png" alt="Corporación Universitaria Americana" class="brand-logo brand-logo-light" />
+        <img src="americana_logo_tight_negative.png" alt="Corporación Universitaria Americana" class="brand-logo brand-logo-dark" />
+      </a>
+      <button class="theme-toggle-btn" id="themeToggleBtn" type="button" aria-label="Cambiar tema">
+        Modo oscuro
+      </button>
+    </div>
+    <span class="eyebrow"><span class="dot"></span>Herramienta interna — inspirada en book&#8209;to&#8209;skill</span>
+    <h1>Compendio: convierte una lectura en <em>skill</em> de IA</h1>
+    <p class="lede">Sube o pega el texto de una lectura de curso y Compendio lo destila en capítulos, glosario, patrones, hoja de referencia y un quiz — listo para que un docente lo use en clase o un agente de IA lo consulte, sin mandarle el libro completo.</p>
+  </header>
+
+  <div class="layout">
+    <aside class="card intake">
+      <h2>1. Cargar lectura</h2>
+      <div class="droparea" id="dropArea" tabindex="0" role="button" aria-label="Subir archivo PDF o TXT">
+        <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="12" y2="12"/><line x1="15" y1="15" x2="12" y2="12"/></svg></span>
+        <strong>Arrastra un PDF o .txt aquí</strong>
+        <span class="hint">o haz clic para elegir el archivo</span>
+      </div>
+      <input type="file" id="fileInput" accept=".pdf,.txt" />
+      <div id="extractStatus"></div>
+
+      <label class="field">Asignatura
+        <input type="text" id="asignatura" placeholder="Ej: Fundamentos de Programación" value="Pedagogía y Aprendizaje">
+      </label>
+      <label class="field">Tema u objetivo (opcional)
+        <input type="text" id="tema" placeholder="Ej: Unidad 3 — recursividad">
+      </label>
+      <label class="field">Texto de la lectura
+        <textarea id="sourceText" spellcheck="false"></textarea>
+      </label>
+      <div class="note" id="charNote"></div>
+
+      <h2 style="margin-top:4px;">2. Generar</h2>
+      <button class="primary" id="generateBtn">Generar skill con IA</button>
+      <div class="note">La IA analiza el texto (vía el backend de n8n) y produce la skill compacta.</div>
+      <div id="genError"></div>
+    </aside>
+
+    <section class="results">
+      <div class="resultHead">
+        <h2 id="resultTitle">—</h2>
+        <span class="badge example" id="resultBadge">Ejemplo</span>
+      </div>
+
+      <div class="statstrip" id="statStrip"></div>
+      <div class="note" id="statNote"></div>
+
+      <div class="card" style="padding:6px 18px 18px;">
+        <div class="tabs" id="tabs">
+          <button class="tab active" data-tab="resumen">Resumen</button>
+          <button class="tab" data-tab="capitulos">Capítulos <span class="n" id="tabnum-capitulos"></span></button>
+          <button class="tab" data-tab="glosario">Glosario <span class="n" id="tabnum-glosario"></span></button>
+          <button class="tab" data-tab="patrones">Patrones <span class="n" id="tabnum-patrones"></span></button>
+          <button class="tab" data-tab="cheatsheet">Hoja rápida <span class="n" id="tabnum-cheatsheet"></span></button>
+          <button class="tab" data-tab="quiz">Quiz <span class="n" id="tabnum-quiz"></span></button>
+          <button class="tab" data-tab="mapa">Mapa conceptual</button>
+          <button class="tab" data-tab="chat">Pregúntale al PDF</button>
+        </div>
+
+        <div class="panel active" data-panel="resumen"><p class="summary" id="p-resumen"></p></div>
+        <div class="panel" data-panel="capitulos" id="p-capitulos"></div>
+        <div class="panel" data-panel="glosario"><dl class="glossaryGrid" id="p-glosario"></dl></div>
+        <div class="panel" data-panel="patrones" id="p-patrones"></div>
+        <div class="panel" data-panel="cheatsheet"><ul class="cheat" id="p-cheatsheet"></ul></div>
+        <div class="panel" data-panel="quiz"><div class="quizWrap" id="p-quiz"></div></div>
+        <div class="panel" data-panel="mapa"><div class="mapWrap" id="p-mapa"></div></div>
+        <div class="panel" data-panel="chat">
+          <div class="chatBox" id="chatBox">
+            <div class="chatEmpty" id="chatEmpty">Escribe una pregunta sobre la lectura, o usa una sugerencia. Las respuestas se basan únicamente en los fragmentos del libro completo más relevantes para tu pregunta (recuperados del índice generado), y citan el fragmento exacto de donde salen.</div>
+          </div>
+          <div class="chatChips" id="chatChips">
+            <button class="chip-btn" data-q="¿Cuál es la idea principal del texto?">¿Cuál es la idea principal?</button>
+            <button class="chip-btn" data-q="Hazme una pregunta de examen sobre este texto, con su respuesta.">Hazme una pregunta de examen</button>
+            <button class="chip-btn" data-q="Resume este texto en un solo párrafo.">Resúmelo en un párrafo</button>
+            <button class="chip-btn" data-q="¿Qué términos debería memorizar de este texto?">Términos para memorizar</button>
+          </div>
+          <div class="chatInputRow">
+            <input type="text" id="chatInput" placeholder="Ej: ¿Qué es la repetición espaciada según el texto?">
+            <button class="primary" id="chatSendBtn">Preguntar</button>
+          </div>
+          <div class="note" id="chatNote"></div>
+        </div>
+      </div>
+
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button class="ghost" id="downloadBtn">Descargar skill (.md)</button>
+        <button class="ghost" id="regenBtn" style="display:none;">Generar de nuevo</button>
+      </div>
+
+      <div class="card" id="libraryCard" style="padding:16px 18px;">
+        <div class="resultHead" style="margin-bottom:8px;">
+          <h2 style="font-size:16px;">Biblioteca de la asignatura</h2>
+          <span class="note" id="libCount"></span>
+        </div>
+        <div id="libraryList" class="libraryList"></div>
+      </div>
+
+      <div class="card" id="territoriosCard" style="padding:16px 18px;">
+        <div class="resultHead" style="margin-bottom:8px;">
+          <h2 style="font-size:16px;">Territorios del conocimiento</h2>
+          <span class="note">toda la biblioteca de la asignatura, no solo la skill abierta</span>
+        </div>
+        <p class="note" style="margin:0 0 12px;">Cada libro guardado aquí funda su propio territorio; sus términos de glosario son las ciudades. Cuando dos libros distintos tocan la misma idea, aparece una ruta dorada entre ellos.</p>
+        <div class="statstrip" id="terrStatStrip" style="margin-bottom:12px;"></div>
+        <div class="terrLegend" id="terrLegend"></div>
+        <div class="terrLayout">
+          <div class="terrGraphCard">
+            <svg id="terrSvg" viewBox="0 0 900 560" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Territorios del conocimiento"></svg>
+            <div class="terrHint">TERRITORIOS DEL CONOCIMIENTO</div>
+            <button class="resetViewBtn" id="terrResetBtn" type="button">⤢ Centrar</button>
+          </div>
+          <div class="card terrPanel" id="terrPanel" style="padding:16px;"></div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer class="foot">
+    <span><strong>Compendio</strong> · Corporación Universitaria Americana · Vigilada Mineducación · Backend: n8n institucional</span>
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  // ---------- Theme Switcher (Modo claro por defecto) ----------
+  var themeToggleBtn = document.getElementById("themeToggleBtn");
+  function getPreferredTheme(){
+    var stored = localStorage.getItem("americana-theme");
+    if (stored === "dark" || stored === "light") return stored;
+    return "light";
+  }
+  function applyTheme(theme){
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("americana-theme", theme);
+    if (themeToggleBtn){
+      themeToggleBtn.textContent = theme === "dark" ? "Modo claro" : "Modo oscuro";
+      themeToggleBtn.setAttribute("aria-label", "Cambiar a modo " + (theme === "dark" ? "claro" : "oscuro"));
+    }
+  }
+  applyTheme(getPreferredTheme());
+  if (themeToggleBtn){
+    themeToggleBtn.addEventListener("click", function(){
+      var cur = document.documentElement.getAttribute("data-theme") || "light";
+      applyTheme(cur === "dark" ? "light" : "dark");
+    });
+  }
+
+
+  // Backend webhook (n8n). Same routing for generate / chat / save / list via "action".
+  var API_BASE = "https://auton8n.americana.edu.co/webhook/compendio";
+  // Microservicio de extracción de PDF (mismo motor real de book-to-skill: pdftotext/pypdf/pdfminer).
+  var EXTRACTOR_BASE = "https://n8n.americana.edu.co/book-extractor";
+  var MAX_CHARS = 30000;
+
+  var SAMPLE = {
+    titulo: "Aprendizaje activo y retención",
+    resumen: "El texto de ejemplo compara la lectura pasiva con técnicas de aprendizaje activo (práctica de recuperación, repetición espaciada y elaboración) y explica por qué estas últimas producen memoria más duradera. También introduce el concepto de 'carga cognitiva' como límite práctico al diseñar actividades de clase.",
+    capitulos: [
+      { titulo: "1. El mito de releer", resumen: "Releer un texto genera una falsa sensación de dominio (fluidez ilusoria) que no se traduce en mejor desempeño en evaluaciones posteriores.", conceptos_clave: ["fluidez ilusoria","aprendizaje pasivo"] },
+      { titulo: "2. Práctica de recuperación", resumen: "Intentar recordar información sin mirar el material fortalece la memoria mucho más que volver a leerla.", conceptos_clave: ["retrieval practice","autoevaluación"] },
+      { titulo: "3. Repetición espaciada", resumen: "Distribuir el estudio en el tiempo, en vez de concentrarlo, mejora la retención a largo plazo.", conceptos_clave: ["espaciamiento","curva del olvido"] },
+      { titulo: "4. Carga cognitiva", resumen: "La memoria de trabajo tiene capacidad limitada; el diseño instruccional debe evitar sobrecargarla con información irrelevante.", conceptos_clave: ["memoria de trabajo","carga extraña"] }
+    ],
+    glosario: [
+      { termino: "Fluidez ilusoria", definicion: "Sensación de haber aprendido algo solo por reconocerlo, sin poder recuperarlo activamente." },
+      { termino: "Práctica de recuperación", definicion: "Técnica de estudio que consiste en intentar recordar información desde la memoria, sin consultar el material." },
+      { termino: "Repetición espaciada", definicion: "Distribuir las sesiones de estudio en el tiempo en vez de concentrarlas en una sola sesión." },
+      { termino: "Carga cognitiva", definicion: "Cantidad de esfuerzo mental que la memoria de trabajo debe manejar durante una tarea." },
+      { termino: "Curva del olvido", definicion: "Modelo que describe cómo decae la retención de información con el paso del tiempo sin repaso." },
+      { termino: "Elaboración", definicion: "Técnica que consiste en explicar con las propias palabras por qué algo es cierto o cómo se relaciona con lo ya sabido." },
+      { termino: "Intercalado", definicion: "Alternar entre distintos temas o tipos de problema durante el estudio, en vez de practicar uno solo hasta dominarlo." },
+      { termino: "Memoria de trabajo", definicion: "Sistema cognitivo de capacidad limitada que retiene y manipula información de forma temporal." }
+    ],
+    patrones: [
+      { nombre: "Autoevaluación previa", descripcion: "Antes de estudiar un tema, intentar responder preguntas sobre él para activar lo que ya se sabe." },
+      { nombre: "Tarjetas de recuperación", descripcion: "Convertir cada concepto clave en una pregunta que deba responderse de memoria." },
+      { nombre: "Calendario espaciado", descripcion: "Programar repasos cortos en intervalos crecientes (1 día, 3 días, 1 semana...)." },
+      { nombre: "Explicar en voz alta", descripcion: "Pedir al estudiante que explique el concepto como si se lo enseñara a otra persona." }
+    ],
+    cheatsheet: [
+      "Releer no es estudiar: prioriza intentar recordar sin ver el material.",
+      "Distribuye el estudio en varias sesiones cortas, no en una maratón.",
+      "Mezcla temas distintos en una misma sesión (intercalado) en vez de bloques únicos.",
+      "Reduce distractores visuales y de formato que no aportan al concepto.",
+      "Convierte cada apartado del texto en una pregunta antes de pasar al siguiente.",
+      "Explica el concepto con tus propias palabras antes de revisar la definición oficial."
+    ],
+    quiz: [
+      { pregunta: "¿Por qué releer un texto genera una falsa sensación de dominio?", opciones: ["Porque el cerebro olvida que ya lo leyó","Porque reconocer el texto se confunde con poder recordarlo","Porque releer reduce la carga cognitiva","Porque no está permitido por la curva del olvido"], respuesta_index: 1, explicacion: "El texto llama a esto 'fluidez ilusoria': reconocer el material no equivale a poder recuperarlo sin ayuda." },
+      { pregunta: "¿Qué es la práctica de recuperación?", opciones: ["Repasar subrayando el texto","Escuchar un resumen en audio","Intentar recordar la información sin consultar el material","Copiar el texto varias veces"], respuesta_index: 2, explicacion: "Consiste en recuperar activamente la información desde la memoria, sin mirar el material fuente." },
+      { pregunta: "La repetición espaciada mejora la retención porque...", opciones: ["Concentra todo el estudio en una sola sesión larga","Distribuye el estudio en el tiempo","Elimina la necesidad de repasar","Aumenta la carga cognitiva a propósito"], respuesta_index: 1, explicacion: "Espaciar las sesiones en el tiempo produce mejor retención a largo plazo que estudiar todo de una vez." },
+      { pregunta: "¿Qué describe el concepto de 'carga cognitiva'?", opciones: ["La cantidad de páginas de un libro","El límite de capacidad de la memoria de trabajo","La velocidad de lectura de un estudiante","El número de repasos espaciados necesarios"], respuesta_index: 1, explicacion: "La memoria de trabajo tiene capacidad limitada; sobrecargarla con información irrelevante dificulta el aprendizaje." },
+      { pregunta: "¿Cuál de estas es una técnica de estudio activo mencionada en el texto?", opciones: ["Subrayar el texto en amarillo","Explicar el concepto en voz alta como si se enseñara a otra persona","Leer el capítulo una segunda vez seguida","Copiar las diapositivas del profesor"], respuesta_index: 1, explicacion: "Explicar en voz alta obliga a recuperar y organizar la información activamente, a diferencia de releer o copiar." }
+    ]
+  };
+  var EXAMPLE_TEXT = "La lectura pasiva -releer un capítulo varias veces- produce una sensación de dominio que rara vez se traduce en mejor desempeño en una evaluación. A esto se le llama fluidez ilusoria: el estudiante reconoce el texto y confunde ese reconocimiento con haber aprendido el contenido; el subrayado y el resaltado en colores producen el mismo espejismo, porque dan la impresión de estar procesando el material cuando en realidad solo se está mirando.\n\nEn cambio, la práctica de recuperación consiste en cerrar el libro e intentar reconstruir la idea desde la memoria. Distintos estudios de psicología cognitiva muestran que esta técnica produce huellas de memoria más duraderas que cualquier forma de repaso pasivo, incluso cuando el estudiante recuerda menos en el momento y siente que está aprendiendo peor: ese esfuerzo de recuperación es precisamente lo que fortalece la conexión.\n\nDistribuir esas sesiones de recuperación en el tiempo -repetición espaciada- en lugar de concentrarlas en una sola noche de estudio, multiplica el efecto. Un mismo número de repasos produce retención muy distinta según el intervalo entre ellos: repasar el mismo día casi no aporta nada nuevo, mientras que espaciar los repasos a lo largo de varios días obliga al cerebro a reconstruir la información desde un olvido parcial, lo que refuerza la huella de memoria.\n\nUna tercera técnica, el intercalado, consiste en alternar entre distintos temas o tipos de problema dentro de una misma sesión de estudio, en vez de practicar uno solo hasta dominarlo antes de pasar al siguiente. Aunque se siente más difícil y más lento en el momento, mejora la capacidad de distinguir cuándo aplicar cada estrategia, algo que el estudio en bloques no entrena.\n\nTodo esto ocurre dentro de un límite: la memoria de trabajo solo puede sostener unos pocos elementos a la vez, así que un material saturado de detalles irrelevantes -lo que se conoce como carga cognitiva extraña- compite por ese mismo espacio con lo que realmente importa aprender. Un buen diseño instruccional elimina animaciones, tipografías decorativas o ejemplos tangenciales que no aportan al concepto central, para dejar toda la capacidad disponible al contenido que sí importa.";
+
+  var SAMPLE_META = { asignatura: "Pedagogía y Aprendizaje", origChars: 18400, isChapterEstimate: true };
+
+  var els = {};
+  ["fileInput","dropArea","extractStatus","asignatura","tema","sourceText","charNote",
+   "generateBtn","genError","resultTitle","resultBadge","statStrip","tabs",
+   "downloadBtn","regenBtn","chatBox","chatInput","chatSendBtn","chatNote","chatChips",
+   "libraryList","libCount"
+   ].forEach(function(id){ els[id] = document.getElementById(id); });
+
+  els.sourceText.value = EXAMPLE_TEXT;
+  updateCharNote();
+
+  var currentSkill = SAMPLE, currentMeta = SAMPLE_META;
+  renderSkill(SAMPLE, SAMPLE_META, "example");
+
+  // ---------- char counter ----------
+  els.sourceText.addEventListener("input", function(){
+    updateCharNote();
+    if (!els.sourceText.value.trim()) setStatus("El cuadro de texto está vacío — no hay nada que enviar a la IA.", "err");
+  });
+  function updateCharNote(){
+    var n = els.sourceText.value.length;
+    var msg = n.toLocaleString("es-CO") + " caracteres";
+    if (n > MAX_CHARS) msg += " · se indexará completo (puede tardar más al generar)";
+    els.charNote.textContent = msg;
+  }
+
+  // ---------- tabs ----------
+  els.tabs.addEventListener("click", function(e){
+    var btn = e.target.closest(".tab");
+    if(!btn) return;
+    document.querySelectorAll(".tab").forEach(function(t){ t.classList.remove("active"); });
+    document.querySelectorAll(".panel").forEach(function(p){ p.classList.remove("active"); });
+    btn.classList.add("active");
+    document.querySelector('.panel[data-panel="'+btn.dataset.tab+'"]').classList.add("active");
+  });
+
+  // ---------- file intake ----------
+  els.dropArea.addEventListener("click", function(){ els.fileInput.click(); });
+  els.dropArea.addEventListener("keydown", function(e){ if(e.key==="Enter"||e.key===" "){ els.fileInput.click(); }});
+  ["dragenter","dragover"].forEach(function(ev){
+    els.dropArea.addEventListener(ev, function(e){ e.preventDefault(); els.dropArea.classList.add("drag"); });
+  });
+  ["dragleave","drop"].forEach(function(ev){
+    els.dropArea.addEventListener(ev, function(e){ e.preventDefault(); els.dropArea.classList.remove("drag"); });
+  });
+  els.dropArea.addEventListener("drop", function(e){
+    var f = e.dataTransfer.files && e.dataTransfer.files[0];
+    if (f) handleFile(f);
+  });
+  els.fileInput.addEventListener("change", function(){
+    var f = els.fileInput.files && els.fileInput.files[0];
+    if (f) handleFile(f);
+  });
+
+  function setStatus(msg, cls){
+    els.extractStatus.textContent = msg;
+    els.extractStatus.className = cls || "";
+  }
+  // Mientras se extrae texto de un archivo, evita que se genere la skill con el
+  // texto de ejemplo/anterior que sigue en el textarea (la extracción es async).
+  function setExtracting(msg){
+    els.generateBtn.disabled = true;
+    els.extractStatus.innerHTML = '<span class="spinner" style="border-color:rgba(0,45,156,.25); border-top-color:var(--spine);"></span> ' + esc(msg);
+    els.extractStatus.className = "";
+  }
+  function doneExtracting(){
+    els.generateBtn.disabled = false;
+  }
+
+  // PDFs (y a veces .txt) traen bytes NUL o pares subrogados sueltos por fuentes con
+  // codificaciones raras — Postgres rechaza esos caracteres (error 22021) al guardar
+  // los fragmentos. Se limpian aquí, antes de que entren al pipeline.
+  function sanitizeText(s){
+    return String(s == null ? "" : s)
+      .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, "")
+      .replace(/[\uD800-\uDBFF](?![\uDC00-\uDFFF])/g, "")
+      .replace(/(^|[^\uD800-\uDBFF])[\uDC00-\uDFFF]/g, "$1");
+  }
+
+  function handleFile(file){
+    var name = file.name || "archivo";
+    if (/\.txt$/i.test(name)){
+      setExtracting("Cargando \"" + name + "\"…");
+      var reader = new FileReader();
+      reader.onload = function(){
+        els.sourceText.value = sanitizeText(String(reader.result || "")).slice(0, 400000);
+        updateCharNote();
+        setStatus("✓ Texto de \"" + name + "\" cargado", "ok");
+        doneExtracting();
+      };
+      reader.onerror = function(){ setStatus("No se pudo leer " + name + ". Pega el texto manualmente.", "err"); doneExtracting(); };
+      reader.readAsText(file);
+      return;
+    }
+    if (/\.pdf$/i.test(name)){
+      setExtracting("Procesando texto de \"" + name + "\"…");
+      extractPdfViaService(file).then(function(result){
+        if (!result.text || !result.text.trim()){
+          setStatus("El PDF no tiene texto extraíble (¿escaneado?). Pega el texto manualmente.", "err");
+          return;
+        }
+        els.sourceText.value = sanitizeText(result.text).slice(0, 400000);
+        updateCharNote();
+        setStatus("✓ Texto extraído de \"" + name + "\" (" + result.pages + " páginas, vía " + result.method + ")", "ok");
+      }).catch(function(err){
+        var msg = (err && err.detail) ? err.detail : "No se pudo leer este PDF automáticamente. Pega el texto manualmente.";
+        setStatus(msg, "err");
+      }).finally(function(){ doneExtracting(); });
+      return;
+    }
+    setStatus("Formato no soportado. Usa PDF o .txt, o pega el texto.", "err");
+  }
+
+  // Extrae el texto del PDF con el microservicio (mismo motor de extracción real de
+  // book-to-skill: pdftotext -layout -> pypdf -> pdfminer, con limpieza de encabezados/pies
+  // de página repetidos), en vez de pdf.js en el navegador — sin límite de páginas y
+  // consciente del layout real del documento.
+  function extractPdfViaService(file){
+    var form = new FormData();
+    form.append("file", file);
+    return fetch(EXTRACTOR_BASE + "/extract", { method: "POST", body: form }).then(function(res){
+      return res.json().catch(function(){ return {}; }).then(function(body){
+        if (!res.ok) throw (body && body.detail ? { detail: body.detail } : { detail: "Error del servicio de extracción (" + res.status + ")." });
+        return body;
+      });
+    });
+  }
+
+  // ---------- render ----------
+  function renderSkill(skill, meta, kind){
+    currentSkill = skill; currentMeta = meta;
+    els.resultTitle.textContent = skill.titulo;
+    els.resultBadge.textContent = kind === "example" ? "Ejemplo" : (kind === "library" ? "De la biblioteca" : "Generado ahora");
+    els.resultBadge.className = "badge " + kind;
+
+    var mdLen = buildMarkdown(skill, meta).length;
+    var ratio = mdLen > 0 ? (meta.origChars / mdLen) : 0;
+    els.statStrip.innerHTML =
+      stat((meta.origChars || 0).toLocaleString("es-CO"), "caracteres originales") +
+      stat(skill.capitulos.length, "capítulos detectados") +
+      stat(skill.glosario.length, "términos de glosario") +
+      stat(ratio > 1 ? ("~" + ratio.toFixed(1) + "×") : "—", "compresión estimada");
+    document.getElementById("statNote").textContent = meta.isChapterEstimate
+      ? "*Cifras estimadas para el capítulo completo de origen — el cuadro de la izquierda muestra solo un fragmento de muestra."
+      : "";
+
+    document.getElementById("p-resumen").textContent = skill.resumen;
+
+    document.getElementById("p-capitulos").innerHTML = skill.capitulos.map(function(c){
+      return '<details class="chapter"><summary>'+esc(c.titulo)+'</summary><div class="chapterBody"><p>'+esc(c.resumen)+'</p>'+
+        (c.conceptos_clave && c.conceptos_clave.length ? '<div class="concepts">'+c.conceptos_clave.map(function(k){return '<span class="chip">'+esc(k)+'</span>';}).join("")+'</div>' : '')+
+        '</div></details>';
+    }).join("");
+
+    document.getElementById("p-glosario").innerHTML = skill.glosario.map(function(g){
+      return '<div class="term"><dt>'+esc(g.termino)+'</dt><dd>'+esc(g.definicion)+'</dd></div>';
+    }).join("");
+
+    document.getElementById("p-patrones").innerHTML = skill.patrones.map(function(p){
+      return '<div class="patternCard"><h3>'+esc(p.nombre)+'</h3><p>'+esc(p.descripcion)+'</p></div>';
+    }).join("");
+
+    document.getElementById("p-cheatsheet").innerHTML = skill.cheatsheet.map(function(c){
+      return "<li>"+esc(c)+"</li>";
+    }).join("");
+
+    ["capitulos","glosario","patrones","cheatsheet","quiz"].forEach(function(k){
+      var n = k === "quiz" ? skill.quiz.length : skill[k].length;
+      var el = document.getElementById("tabnum-"+k);
+      if (el) el.textContent = n;
+    });
+
+    document.getElementById("p-mapa").innerHTML = renderConceptMap(skill);
+
+    initQuiz(skill.quiz);
+    els.regenBtn.style.display = kind === "generated" ? "inline-flex" : "none";
+  }
+
+  function renderConceptMap(skill){
+    var W = 640, H = 640, cx = W/2, cy = H/2;
+    var chapters = skill.capitulos.slice(0, 6);
+    var n = chapters.length;
+    var R1 = 150, R2 = 262;
+    var svg = '<svg viewBox="0 0 '+W+' '+H+'" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Mapa conceptual de la lectura">';
+    var edges = "", nodes = "";
+
+    chapters.forEach(function(c, i){
+      var angle = (i / n) * Math.PI * 2 - Math.PI / 2;
+      var chx = cx + R1 * Math.cos(angle), chy = cy + R1 * Math.sin(angle);
+      edges += '<line x1="'+cx+'" y1="'+cy+'" x2="'+chx+'" y2="'+chy+'" stroke="var(--line)" stroke-width="1.5"/>';
+
+      var concepts = (c.conceptos_clave || []).slice(0, 3);
+      var m = concepts.length;
+      concepts.forEach(function(k, j){
+        var spread = 0.34;
+        var a2 = angle + (j - (m - 1) / 2) * spread;
+        var kx = cx + R2 * Math.cos(a2), ky = cy + R2 * Math.sin(a2);
+        edges += '<line x1="'+chx+'" y1="'+chy+'" x2="'+kx+'" y2="'+ky+'" stroke="var(--line)" stroke-width="1"/>';
+        nodes += '<g>' +
+          '<rect x="'+(kx-52)+'" y="'+(ky-11)+'" width="104" height="22" rx="11" fill="var(--marker-tint)"/>' +
+          '<text x="'+kx+'" y="'+(ky+4)+'" text-anchor="middle" class="mapNodeConcept" font-size="10.5" fill="var(--ink)">'+wrapClip(k,16)+'</text>' +
+          '</g>';
+      });
+
+      var lines = wrapLines(c.titulo, 15, 2);
+      nodes += '<g>' +
+        '<circle cx="'+chx+'" cy="'+chy+'" r="40" fill="var(--surface)" stroke="var(--spine)" stroke-width="1.5"/>' +
+        lines.map(function(l, li){ return '<text x="'+chx+'" y="'+(chy + (li - (lines.length-1)/2) * 12 + 4)+'" text-anchor="middle" class="mapNodeChapter" font-size="11" fill="var(--spine)">'+esc(l)+'</text>'; }).join("") +
+        '</g>';
+    });
+
+    nodes += '<g>' +
+      '<circle cx="'+cx+'" cy="'+cy+'" r="58" fill="var(--spine)"/>' +
+      wrapLines(skill.titulo, 14, 3).map(function(l, li, arr){ return '<text x="'+cx+'" y="'+(cy + (li - (arr.length-1)/2) * 13 + 4)+'" text-anchor="middle" class="mapNodeTitle" font-size="12.5" fill="#FBF4F1">'+esc(l)+'</text>'; }).join("") +
+      '</g>';
+
+    svg += edges + nodes + '</svg>';
+    return svg;
+  }
+  function wrapClip(s, max){ s = String(s); return esc(s.length > max ? s.slice(0, max-1) + "…" : s); }
+  function wrapLines(s, max, maxLines){
+    var words = String(s).split(/\s+/), lines = [], cur = "";
+    words.forEach(function(w){
+      if ((cur + " " + w).trim().length > max && cur){ lines.push(cur); cur = w; }
+      else { cur = (cur ? cur + " " : "") + w; }
+    });
+    if (cur) lines.push(cur);
+    if (lines.length > maxLines){ lines = lines.slice(0, maxLines); lines[maxLines-1] += "…"; }
+    return lines;
+  }
+
+  function stat(num, lbl){ return '<div class="stat"><span class="num">'+num+'</span><span class="lbl">'+lbl+'</span></div>'; }
+  function esc(s){ return String(s == null ? "" : s).replace(/[&<>]/g, function(c){ return c === "&" ? "&amp;" : c === "<" ? "&lt;" : "&gt;"; }); }
+
+  function initQuiz(questions){
+    var idx = 0, score = 0, answered = [];
+    var box = document.getElementById("p-quiz");
+    function draw(){
+      var q = questions[idx];
+      var html = '<div class="quizProgress">Pregunta '+(idx+1)+' de '+questions.length+' · aciertos: '+score+'</div>';
+      html += '<p class="quizQ">'+esc(q.pregunta)+'</p><div class="quizOpts">';
+      q.opciones.forEach(function(op, i){ html += '<button class="quizOpt" data-i="'+i+'">'+esc(op)+'</button>'; });
+      html += '</div><div class="quizExpl" style="display:none;" id="quizExplBox"></div>';
+      html += '<div class="quizNav"><span class="quizScore"></span><button class="ghost" id="quizNextBtn" style="display:none;">'+(idx===questions.length-1 ? "Ver resultado" : "Siguiente →")+'</button></div>';
+      box.innerHTML = html;
+      var already = answered[idx] !== undefined;
+      if (already) lockAnswer(q, already);
+      box.querySelectorAll(".quizOpt").forEach(function(btn){
+        btn.addEventListener("click", function(){
+          if (answered[idx] !== undefined) return;
+          var chosen = parseInt(btn.dataset.i, 10);
+          answered[idx] = chosen;
+          if (chosen === q.respuesta_index) score++;
+          lockAnswer(q, chosen);
+        });
+      });
+      var nextBtn = document.getElementById("quizNextBtn");
+      if (nextBtn) nextBtn.addEventListener("click", function(){
+        if (idx < questions.length - 1){ idx++; draw(); } else { drawResult(); }
+      });
+    }
+    function lockAnswer(q, chosen){
+      box.querySelectorAll(".quizOpt").forEach(function(btn){
+        var i = parseInt(btn.dataset.i, 10);
+        btn.disabled = true;
+        if (i === q.respuesta_index) btn.classList.add("correct");
+        else if (i === chosen) btn.classList.add("wrong");
+      });
+      var eb = document.getElementById("quizExplBox");
+      eb.style.display = "block";
+      eb.textContent = q.explicacion;
+      var nb = document.getElementById("quizNextBtn");
+      if (nb) nb.style.display = "inline-flex";
+    }
+    function drawResult(){
+      box.innerHTML = '<p class="quizQ">Resultado: '+score+' / '+questions.length+'</p>'+
+        '<p style="color:var(--ink-soft); font-size:14.5px;">'+(score===questions.length ? "Dominio completo de la lectura." : "Repasa el glosario y los capítulos marcados antes de reintentar.")+'</p>'+
+        '<button class="ghost" id="quizRetryBtn">Reintentar quiz</button>';
+      document.getElementById("quizRetryBtn").addEventListener("click", function(){ idx=0; score=0; answered=[]; draw(); });
+    }
+    draw();
+  }
+
+  function buildMarkdown(skill, meta){
+    var out = "# " + skill.titulo + "\n\n";
+    out += "> Skill generada por Compendio a partir de una lectura de **" + (meta.asignatura || "—") + "**.\n\n";
+    out += "## Resumen\n" + skill.resumen + "\n\n";
+    out += "## Capítulos\n";
+    skill.capitulos.forEach(function(c){
+      out += "### " + c.titulo + "\n" + c.resumen + "\n";
+      if (c.conceptos_clave && c.conceptos_clave.length) out += "Conceptos clave: " + c.conceptos_clave.join(", ") + "\n";
+      out += "\n";
+    });
+    out += "## Glosario\n";
+    skill.glosario.forEach(function(g){ out += "- **" + g.termino + "**: " + g.definicion + "\n"; });
+    out += "\n## Patrones y técnicas\n";
+    skill.patrones.forEach(function(p){ out += "- **" + p.nombre + "**: " + p.descripcion + "\n"; });
+    out += "\n## Hoja de referencia rápida\n";
+    skill.cheatsheet.forEach(function(c){ out += "- " + c + "\n"; });
+    out += "\n## Quiz\n";
+    skill.quiz.forEach(function(q, i){
+      out += (i+1) + ". " + q.pregunta + "\n";
+      q.opciones.forEach(function(op, j){ out += "   " + String.fromCharCode(97+j) + ") " + op + (j===q.respuesta_index ? "  ← correcta" : "") + "\n"; });
+      out += "   _" + q.explicacion + "_\n\n";
+    });
+    return out;
+  }
+
+  // ---------- backend calls (n8n webhook) ----------
+  function callApi(payload){
+    return fetch(API_BASE, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    }).then(function(res){
+      if (!res.ok) throw { code: "http_" + res.status };
+      return res.json();
+    });
+  }
+
+  function errorMessage(err){
+    if (err && typeof err.code === "string" && err.code.indexOf("http_") === 0) return "El servidor respondió con un error (" + err.code.slice(5) + "). Intenta de nuevo.";
+    if (err instanceof TypeError) return "No se pudo conectar con el backend. Revisa tu conexión o que el webhook de n8n esté activo.";
+    return "No se pudo completar la solicitud. Intenta de nuevo.";
+  }
+
+  function callGenerate(refresh){
+    var text = els.sourceText.value.trim();
+    if (!text){ els.genError.innerHTML = '<div class="errBox">Pega o sube el texto de la lectura primero.</div>'; return; }
+    var asignatura = els.asignatura.value.trim();
+    var tema = els.tema.value.trim();
+    var origChars = text.length;
+
+    els.generateBtn.disabled = true;
+    var originalLabel = els.generateBtn.innerHTML;
+    els.generateBtn.innerHTML = '<span class="spinner"></span> Analizando…';
+    els.genError.innerHTML = "";
+
+    callApi({ action: "generate", text: text, asignatura: asignatura, tema: tema })
+      .then(function(skill){
+        if (!skill || !skill.capitulos || !skill.glosario || !skill.quiz) throw { code: "invalid_response" };
+        var meta = { asignatura: asignatura || "—", tema: tema, origChars: origChars, skillId: skill.id, indexReady: false };
+        renderSkill(skill, meta, "generated");
+        document.querySelector('.tab[data-tab="resumen"]').click();
+        els.genError.innerHTML = '<div class="note" style="color:var(--good);">✓ Guardado automáticamente en la biblioteca de la asignatura.</div>';
+        loadLibrary();
+        pollIndexingStatus(skill.id, skill.expectedChunks || 1);
+      })
+      .catch(function(err){ els.genError.innerHTML = '<div class="errBox">' + esc(errorMessage(err)) + '</div>'; })
+      .finally(function(){ els.generateBtn.disabled = false; els.generateBtn.innerHTML = originalLabel; });
+  }
+
+  // ---------- indexing status polling ----------
+  // "generate" responds immediately while chunking/embedding keeps running in the backend
+  // afterward; poll "status" until enough fragments exist so the chat doesn't tell the user
+  // "no se encontraron fragmentos" for a book that just hasn't finished indexing yet.
+  function pollIndexingStatus(skillId, expectedChunks){
+    var attempts = 0, maxAttempts = 30; // ~2 minutes at 4s apart
+    els.chatSendBtn.disabled = true;
+    els.chatInput.disabled = true;
+    els.chatNote.innerHTML = '<div class="note">Indexando el libro para el chat…</div>';
+
+    function done(warn){
+      currentMeta.indexReady = true;
+      els.chatSendBtn.disabled = false;
+      els.chatInput.disabled = false;
+      els.chatNote.innerHTML = warn ? '<div class="note">' + esc(warn) + '</div>' : "";
+    }
+
+    function poll(){
+      attempts++;
+      callApi({ action: "status", skillId: skillId }).then(function(data){
+        var count = (data && data.count) || 0;
+        if (count >= expectedChunks){ done(); return; }
+        if (attempts >= maxAttempts){ done("La indexación tardó más de lo esperado (" + count + "/" + expectedChunks + " fragmentos) — el chat puede no encontrar todo el contenido todavía."); return; }
+        els.chatNote.innerHTML = '<div class="note">Indexando el libro para el chat… (' + count + '/' + expectedChunks + ' fragmentos)</div>';
+        setTimeout(poll, 4000);
+      }).catch(function(){
+        if (attempts >= maxAttempts){ done(); return; }
+        setTimeout(poll, 4000);
+      });
+    }
+    poll();
+  }
+
+  // ---------- chat ----------
+  var chatHistory = [];
+  var MAX_CHAT_MSGS = 12;
+  var chatBusy = false;
+
+  function addChatBubble(role, text, cita){
+    var empty = document.getElementById("chatEmpty");
+    if (empty) empty.remove();
+    var div = document.createElement("div");
+    div.className = "chatMsg " + role;
+    div.textContent = text;
+    if (cita && String(cita).trim()){
+      var cite = document.createElement("div");
+      cite.className = "chatCite";
+      cite.textContent = "“" + cita + "”";
+      div.appendChild(cite);
+    }
+    els.chatBox.appendChild(div);
+    els.chatBox.scrollTop = els.chatBox.scrollHeight;
+    return div;
+  }
+
+  function sendChat(){
+    if (chatBusy) return;
+    var question = els.chatInput.value.trim();
+    if (!question) return;
+    if (!currentMeta || !currentMeta.skillId){ els.chatNote.innerHTML = '<div class="errBox">Genera la skill primero (botón "Generar skill con IA") antes de preguntar — el chat busca en el índice ya indexado del libro, no en el cuadro de texto.</div>'; return; }
+    if (currentMeta.indexReady === false){ els.chatNote.innerHTML = '<div class="note">Todavía se está indexando el libro, espera un momento y vuelve a intentar.</div>'; return; }
+
+    els.chatNote.innerHTML = "";
+    addChatBubble("user", question);
+    chatHistory.push({ role: "user", content: question });
+    if (chatHistory.length > MAX_CHAT_MSGS) chatHistory = chatHistory.slice(chatHistory.length - MAX_CHAT_MSGS);
+    els.chatInput.value = "";
+
+    var thinkingBubble = addChatBubble("assistant thinking", "Pensando…");
+    chatBusy = true;
+    els.chatSendBtn.disabled = true;
+    els.chatInput.disabled = true;
+
+    callApi({
+      action: "chat",
+      skillId: currentMeta.skillId,
+      asignatura: els.asignatura.value.trim(),
+      question: question,
+      history: chatHistory.slice(0, -1)
+    })
+      .then(function(data){
+        var respuesta = (data && typeof data.respuesta === "string" && data.respuesta.trim()) || "(sin respuesta)";
+        var cita = data && data.cita;
+        thinkingBubble.classList.remove("thinking");
+        thinkingBubble.textContent = respuesta;
+        if (cita && String(cita).trim()){
+          var cite = document.createElement("div");
+          cite.className = "chatCite";
+          cite.textContent = "“" + cita + "”";
+          thinkingBubble.appendChild(cite);
+        }
+        chatHistory.push({ role: "assistant", content: respuesta });
+      })
+      .catch(function(err){
+        thinkingBubble.remove();
+        chatHistory.pop();
+        els.chatNote.innerHTML = '<div class="errBox">' + esc(errorMessage(err)) + '</div>';
+      })
+      .finally(function(){
+        chatBusy = false;
+        els.chatSendBtn.disabled = false;
+        els.chatInput.disabled = false;
+        els.chatInput.focus();
+      });
+  }
+
+  els.chatSendBtn.addEventListener("click", sendChat);
+  els.chatInput.addEventListener("keydown", function(e){ if (e.key === "Enter") sendChat(); });
+  els.chatChips.addEventListener("click", function(e){
+    var btn = e.target.closest(".chip-btn");
+    if (!btn) return;
+    els.chatInput.value = btn.dataset.q;
+    sendChat();
+  });
+
+  els.generateBtn.addEventListener("click", function(){ callGenerate(false); });
+  els.regenBtn.addEventListener("click", function(){ callGenerate(true); });
+
+  // ---------- download (real browser download, no sandbox here) ----------
+  els.downloadBtn.addEventListener("click", function(){
+    var md = buildMarkdown(currentSkill, currentMeta);
+    var slug = (currentSkill.titulo || "skill").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/(^-|-$)/g,"");
+    var blob = new Blob([md], { type: "text/markdown;charset=utf-8" });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url; a.download = (slug || "skill") + ".md";
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);
+  });
+
+  // ---------- library (n8n Data Table) ----------
+  // Nota: "generate" ya guarda automáticamente la skill en la biblioteca (con su índice de
+  // fragmentos para el chat), así que aquí ya no hace falta un botón de guardado manual.
+
+  var libraryItemsCache = [];
+  var conexionesCache = [];
+
+  function loadLibrary(){
+    Promise.all([
+      callApi({ action: "list" }),
+      callApi({ action: "conexiones" }).catch(function(){ return { items: [] }; })
+    ]).then(function(results){
+      var data = results[0];
+      conexionesCache = (results[1] && results[1].items) || [];
+      var items = (data && data.items) || [];
+      libraryItemsCache = items;
+      renderTerritorios();
+      if (!items.length){
+        els.libraryList.innerHTML = '<div class="libEmpty">Todavía no hay skills guardadas. Genera una con "Generar skill con IA" — se guarda automáticamente.</div>';
+        els.libCount.textContent = "";
+        return;
+      }
+      els.libCount.textContent = items.length + (items.length === 1 ? " skill guardada" : " skills guardadas");
+      els.libraryList.innerHTML = items.map(function(it){
+        var date = it.createdAt ? new Date(it.createdAt).toLocaleDateString("es-CO", { day:"numeric", month:"short", year:"numeric" }) : "";
+        return '<div class="libItem"><div class="libInfo"><span class="libTitle">'+esc(it.titulo || "(sin título)")+'</span>' +
+          '<span class="libMeta">'+esc(it.asignatura || "—")+' · '+date+' · '+ (it.capitulos ? it.capitulos.length : 0) +' cap · '+ (it.glosario ? it.glosario.length : 0) +' términos</span></div>' +
+          '<div class="libActions">' +
+          '<button class="ghost" data-open="'+it.id+'">Abrir</button>' +
+          '<button class="iconBtn danger" data-delete="'+it.id+'" title="Eliminar libro y sus fragmentos indexados" aria-label="Eliminar">' +
+          '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg>' +
+          '</button>' +
+          '</div></div>';
+      }).join("");
+      els.libraryList.querySelectorAll("[data-open]").forEach(function(btn){
+        btn.addEventListener("click", function(){
+          var found = items.find(function(x){ return String(x.id) === btn.dataset.open; });
+          if (!found) return;
+          var meta = { asignatura: found.asignatura || "—", tema: found.tema || "", origChars: found.origChars || 0, skillId: found.id, indexReady: true };
+          renderSkill(found, meta, "library");
+          document.querySelector('.tab[data-tab="resumen"]').click();
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+      });
+      els.libraryList.querySelectorAll("[data-delete]").forEach(function(btn){
+        btn.addEventListener("click", function(){
+          var found = items.find(function(x){ return String(x.id) === btn.dataset.delete; });
+          if (!found) return;
+          var ok = window.confirm('¿Eliminar "' + found.titulo + '" y todos sus fragmentos indexados? Esta acción no se puede deshacer.');
+          if (!ok) return;
+          btn.disabled = true;
+          callApi({ action: "delete", skillId: found.id }).then(function(){
+            if (currentMeta && String(currentMeta.skillId) === String(found.id)){
+              currentSkill = SAMPLE; currentMeta = SAMPLE_META;
+              renderSkill(SAMPLE, SAMPLE_META, "example");
+            }
+            loadLibrary();
+          }).catch(function(err){
+            btn.disabled = false;
+            alert("No se pudo eliminar: " + errorMessage(err));
+          });
+        });
+      });
+    }).catch(function(){
+      els.libraryList.innerHTML = '<div class="libEmpty">No se pudo cargar la biblioteca (¿el webhook de n8n está activo?).</div>';
+    });
+  }
+
+  // ---------- Territorios del conocimiento ----------
+  // Each saved book in the library founds its own territory; its glossary terms are the cities.
+  // A gold route appears between two terms from DIFFERENT books when the backend's AI judged them
+  // conceptually connected while generating the newer book (see action "conexiones"). Books saved
+  // before that feature existed have no stored connections yet; for those we fall back to a rough
+  // word-overlap heuristic (terrJaccard) so the map isn't empty until they're regenerated.
+  var terrBuiltFor = null;
+
+  function terrPalette(i, n){ return "hsl(" + Math.round((360 / Math.max(n,1)) * i) + ", 55%, 60%)"; }
+  function terrClip(s, max){ s = String(s == null ? "" : s); return s.length > max ? s.slice(0, max - 1).trim() + "…" : s; }
+  var TERR_STOPWORDS = {"que":1,"los":1,"las":1,"del":1,"con":1,"para":1,"una":1,"uno":1,"como":1,"esta":1,"este":1,"sus":1,"por":1,"mas":1,"sin":1,"entre":1,"desde":1,"cada":1,"sobre":1,"donde":1,"cual":1,"cuando":1,"tiene":1,"tienen":1,"son":1,"ser":1,"muy":1,"otro":1,"otra":1,"todo":1,"toda":1,"the":1,"and":1};
+  function terrSigWords(s){
+    return (String(s||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").match(/[a-z]{4,}/g) || []).filter(function(w){ return !TERR_STOPWORDS[w]; });
+  }
+  function terrJaccard(a, b){
+    var sa = {}, sb = {}, sizeA = 0, sizeB = 0, inter = 0;
+    terrSigWords(a).forEach(function(w){ if (!sa[w]){ sa[w]=1; sizeA++; } });
+    terrSigWords(b).forEach(function(w){ if (!sb[w]){ sb[w]=1; sizeB++; if (sa[w]) inter++; } });
+    if (!sizeA || !sizeB) return 0;
+    return inter / (sizeA + sizeB - inter);
+  }
+
+  function buildTerritoriosData(){
+    var items = libraryItemsCache;
+    var BOOKS = {}, NODES = [], EDGES = [];
+    // Data Table ids can come back numeric — normalize to string everywhere so `Object.keys()`
+    // (always strings) and strict `===` comparisons against node.book actually match.
+    items.forEach(function(it, i){ BOOKS[String(it.id)] = { titulo: it.titulo || "(sin título)", color: terrPalette(i, items.length), item: it }; });
+    items.forEach(function(it){
+      var bookKey = String(it.id);
+      var glos = it.glosario || [];
+      var nodeIds = [];
+      glos.forEach(function(g, gi){
+        var id = bookKey + "_g" + gi;
+        NODES.push({ id:id, label:g.termino, def:g.definicion, book:bookKey, cap:"" });
+        nodeIds.push(id);
+      });
+      var internalCount = 0;
+      (it.capitulos || []).forEach(function(c){
+        var matched = [];
+        (c.conceptos_clave || []).forEach(function(kw){
+          var kwLow = String(kw).toLowerCase();
+          glos.forEach(function(g, gi){
+            var termLow = String(g.termino).toLowerCase();
+            if (termLow.indexOf(kwLow) >= 0 || kwLow.indexOf(termLow) >= 0){
+              var id = bookKey+"_g"+gi;
+              if (matched.indexOf(id) < 0) matched.push(id);
+              var node = NODES.filter(function(n){ return n.id===id; })[0];
+              if (node && !node.cap) node.cap = c.titulo;
+            }
+          });
+        });
+        for (var mi=0; mi<matched.length-1; mi++){ EDGES.push({ a:matched[mi], b:matched[mi+1], w:1, bridge:false }); internalCount++; }
+      });
+      if (!internalCount && nodeIds.length > 1){
+        for (var ni=0; ni<nodeIds.length-1; ni++) EDGES.push({ a:nodeIds[ni], b:nodeIds[ni+1], w:0.6, bridge:false });
+      }
+    });
+    // Prefer real AI-judged connections (from the "conexiones" table, one row per pair with a
+    // stated "motivo"). Only books that lack ANY stored connection (generated before this feature,
+    // or where the AI genuinely found nothing) fall back to the old word-overlap heuristic.
+    var bySkillTerm = {};
+    NODES.forEach(function(n){ bySkillTerm[n.book + "||" + n.label] = n; });
+    var booksWithAiBridge = {};
+    (conexionesCache || []).forEach(function(c){
+      var nA = bySkillTerm[String(c.skillIdA) + "||" + c.terminoA];
+      var nB = bySkillTerm[String(c.skillIdB) + "||" + c.terminoB];
+      if (!nA || !nB || nA.book === nB.book) return;
+      EDGES.push({ a:nA.id, b:nB.id, w:1.2, bridge:true, motivo:c.motivo || "" });
+      booksWithAiBridge[nA.book] = true; booksWithAiBridge[nB.book] = true;
+    });
+    var candidates = [];
+    for (var i=0;i<NODES.length;i++){
+      for (var j=i+1;j<NODES.length;j++){
+        var n1=NODES[i], n2=NODES[j];
+        if (n1.book === n2.book) continue;
+        if (booksWithAiBridge[n1.book] && booksWithAiBridge[n2.book]) continue;
+        var score = terrJaccard(n1.def, n2.def);
+        if (score > 0.16) candidates.push({ a:n1.id, b:n2.id, score:score });
+      }
+    }
+    candidates.sort(function(a,b){ return b.score-a.score; });
+    candidates.slice(0, 10).forEach(function(c){ EDGES.push({ a:c.a, b:c.b, w:1.2, bridge:true }); });
+    return { BOOKS:BOOKS, NODES:NODES, EDGES:EDGES };
+  }
+
+  function terrCross(o,a,b){ return (a.x-o.x)*(b.y-o.y)-(a.y-o.y)*(b.x-o.x); }
+  function terrConvexHull(points){
+    var pts = points.slice().sort(function(a,b){ return a.x-b.x || a.y-b.y; });
+    var n = pts.length, k=0, hull = new Array(2*n);
+    for (var i=0;i<n;i++){ while(k>=2 && terrCross(hull[k-2],hull[k-1],pts[i])<=0) k--; hull[k++]=pts[i]; }
+    var lower = k+1;
+    for (var i2=n-2;i2>=0;i2--){ while(k>=lower && terrCross(hull[k-2],hull[k-1],pts[i2])<=0) k--; hull[k++]=pts[i2]; }
+    return hull.slice(0,k-1);
+  }
+  function terrCentroid(pts){ var cx=0,cy=0; pts.forEach(function(p){cx+=p.x;cy+=p.y;}); return {x:cx/pts.length,y:cy/pts.length}; }
+  function terrMulberry(seed){
+    var a = seed;
+    return function(){ a|=0; a=(a+0x6D2B79F5)|0; var t=Math.imul(a^(a>>>15),1|a); t=(t+Math.imul(t^(t>>>7),61|t))^t; return ((t^(t>>>14))>>>0)/4294967296; };
+  }
+  function terrNodeRadiusAt(nodePts, p){
+    var closest=null, best=Infinity;
+    nodePts.forEach(function(n){ var d=(n.x-p.x)*(n.x-p.x)+(n.y-p.y)*(n.y-p.y); if (d<best){best=d;closest=n;} });
+    return closest ? closest.r : 10;
+  }
+  function terrExpandedHull(nodePts, margin){
+    var hull = terrConvexHull(nodePts.map(function(n){ return {x:n.x,y:n.y}; }));
+    if (hull.length < 3){
+      var c0 = terrCentroid(nodePts); hull=[];
+      for (var a=0;a<8;a++) hull.push({ x:c0.x+Math.cos(a/8*Math.PI*2)*40, y:c0.y+Math.sin(a/8*Math.PI*2)*40 });
+    }
+    var c = terrCentroid(hull);
+    return hull.map(function(p){
+      var dx=p.x-c.x, dy=p.y-c.y, d=Math.sqrt(dx*dx+dy*dy)||1;
+      var m = margin + (terrNodeRadiusAt(nodePts, p) || 10);
+      return { x:p.x+(dx/d)*m, y:p.y+(dy/d)*m };
+    });
+  }
+  function terrWavify(points, seed){
+    var rand = terrMulberry(seed), pts = points, amp = 0.4;
+    for (var pass=0; pass<3; pass++){
+      var next = [];
+      for (var i=0;i<pts.length;i++){
+        var p1=pts[i], p2=pts[(i+1)%pts.length];
+        next.push(p1);
+        var mx=(p1.x+p2.x)/2, my=(p1.y+p2.y)/2, dx=p2.x-p1.x, dy=p2.y-p1.y, len=Math.sqrt(dx*dx+dy*dy)||1;
+        var nx=-dy/len, ny=dx/len, bulge=(rand()-0.5)*len*amp;
+        next.push({ x:mx+nx*bulge, y:my+ny*bulge });
+      }
+      pts = next; amp *= 0.55;
+    }
+    return pts;
+  }
+  function terrRingPoints(points, centroid, factor){
+    return points.map(function(p){ return { x:centroid.x+(p.x-centroid.x)*factor, y:centroid.y+(p.y-centroid.y)*factor }; });
+  }
+  function terrCatmullRom(pts){
+    var n = pts.length, d = "M"+pts[0].x.toFixed(1)+","+pts[0].y.toFixed(1)+" ";
+    for (var i=0;i<n;i++){
+      var p0=pts[(i-1+n)%n], p1=pts[i], p2=pts[(i+1)%n], p3=pts[(i+2)%n];
+      var c1x=p1.x+(p2.x-p0.x)/6, c1y=p1.y+(p2.y-p0.y)/6, c2x=p2.x-(p3.x-p1.x)/6, c2y=p2.y-(p3.y-p1.y)/6;
+      d += "C"+c1x.toFixed(1)+","+c1y.toFixed(1)+" "+c2x.toFixed(1)+","+c2y.toFixed(1)+" "+p2.x.toFixed(1)+","+p2.y.toFixed(1)+" ";
+    }
+    return d+"Z";
+  }
+
+  function renderTerritorios(){
+    var data = buildTerritoriosData();
+    var BOOKS = data.BOOKS, NODES = data.NODES, EDGES = data.EDGES;
+    var svg = document.getElementById("terrSvg");
+    var svgNS = "http://www.w3.org/2000/svg";
+    while (svg.firstChild) svg.removeChild(svg.firstChild);
+    document.getElementById("terrLegend").innerHTML = "";
+    document.getElementById("terrStatStrip").innerHTML = "";
+
+    if (!Object.keys(BOOKS).length || !NODES.length){
+      svg.parentNode.querySelector(".terrHint").style.display = "none";
+      var fo = document.createElementNS(svgNS, "foreignObject");
+      fo.setAttribute("x",0); fo.setAttribute("y",0); fo.setAttribute("width",900); fo.setAttribute("height",560);
+      fo.innerHTML = '<div xmlns="http://www.w3.org/1999/xhtml" class="terrEmpty">Todavía no hay libros con glosario guardados en esta biblioteca.<br>Genera al menos uno (idealmente dos, para ver rutas entre lecturas) y vuelve a esta pestaña.</div>';
+      svg.appendChild(fo);
+      document.getElementById("terrPanel").innerHTML = '<div class="panelEmpty">El atlas aparecerá aquí cuando tengas libros guardados.</div>';
+      return;
+    }
+    svg.parentNode.querySelector(".terrHint").style.display = "";
+
+    function el(tag, attrs){ var e = document.createElementNS(svgNS, tag); for (var k in attrs) e.setAttribute(k, attrs[k]); return e; }
+    var byId = {}; NODES.forEach(function(n){ byId[n.id] = n; });
+    var W=900, H=560, CX=W/2, CY=H/2;
+    var bookKeys = Object.keys(BOOKS);
+    var angleByBook = {};
+    bookKeys.forEach(function(k, i){ angleByBook[k] = (i/bookKeys.length) * Math.PI*2 - Math.PI/2; });
+    NODES.forEach(function(n){
+      var a = angleByBook[n.book] + (Math.random()-0.5)*1.0;
+      var r = 70 + Math.random()*60;
+      n.x = CX + Math.cos(a)*(170+r*0.4) + (Math.random()-0.5)*30;
+      n.y = CY + Math.sin(a)*(140+r*0.4) + (Math.random()-0.5)*30;
+      n.vx = 0; n.vy = 0;
+    });
+    function degree(id){ return EDGES.filter(function(e){ return e.a===id||e.b===id; }).length; }
+    NODES.forEach(function(n){ n.deg = degree(n.id); n.r = 7 + Math.min(n.deg,5)*1.4; });
+
+    function relax(iterations, pinId, pinPos){
+      for (var iter=0; iter<iterations; iter++){
+        var centroids = {};
+        bookKeys.forEach(function(k){ centroids[k] = {x:0,y:0,n:0}; });
+        NODES.forEach(function(n){ centroids[n.book].x+=n.x; centroids[n.book].y+=n.y; centroids[n.book].n++; });
+        bookKeys.forEach(function(k){ if (centroids[k].n){ centroids[k].x/=centroids[k].n; centroids[k].y/=centroids[k].n; } });
+        for (var i=0;i<NODES.length;i++){
+          for (var j=i+1;j<NODES.length;j++){
+            var n1=NODES[i], n2=NODES[j];
+            var dx=n1.x-n2.x, dy=n1.y-n2.y, d2=dx*dx+dy*dy+0.01, d=Math.sqrt(d2);
+            var sameBook = n1.book===n2.book;
+            var force = (sameBook?900:2600)/d2;
+            var fx=(dx/d)*force, fy=(dy/d)*force;
+            n1.vx+=fx; n1.vy+=fy; n2.vx-=fx; n2.vy-=fy;
+          }
+        }
+        EDGES.forEach(function(e){
+          var n1=byId[e.a], n2=byId[e.b];
+          var dx=n2.x-n1.x, dy=n2.y-n1.y, d=Math.sqrt(dx*dx+dy*dy)||0.01;
+          var target = e.bridge?260:70, k=0.022*e.w, f=(d-target)*k;
+          var fx=(dx/d)*f, fy=(dy/d)*f;
+          n1.vx+=fx; n1.vy+=fy; n2.vx-=fx; n2.vy-=fy;
+        });
+        NODES.forEach(function(n){
+          if (pinId && n.id===pinId){ n.x=pinPos.x; n.y=pinPos.y; n.vx=0; n.vy=0; return; }
+          var c = centroids[n.book];
+          n.vx += (c.x-n.x)*0.01; n.vy += (c.y-n.y)*0.01;
+          n.vx += (CX-n.x)*0.0012; n.vy += (CY-n.y)*0.0012;
+          n.vx*=0.82; n.vy*=0.82; n.x+=n.vx; n.y+=n.vy;
+          n.x = Math.max(50, Math.min(W-50, n.x));
+          n.y = Math.max(50, Math.min(H-50, n.y));
+        });
+      }
+    }
+    relax(220, null, null);
+
+    svg.appendChild(el("rect", { x:0,y:0,width:W,height:H, fill:"#100E0A" }));
+    var view = { tx:0, ty:0, scale:1 };
+    var viewport = el("g", { id:"terrViewport" });
+    svg.appendChild(viewport);
+    function applyView(){ viewport.setAttribute("transform", "translate("+view.tx+","+view.ty+") scale("+view.scale+")"); }
+    applyView();
+    var dotsDefs = el("defs", {});
+    var dotsPattern = el("pattern", { id:"terrDots", width:26, height:26, patternUnits:"userSpaceOnUse" });
+    dotsPattern.appendChild(el("circle", { cx:2, cy:2, r:1.3, fill:"rgba(251,248,239,0.14)" }));
+    dotsDefs.appendChild(dotsPattern); svg.appendChild(dotsDefs);
+    viewport.appendChild(el("rect", { x:-2500,y:-2500,width:5000,height:5000, fill:"url(#terrDots)" }));
+
+    var territoryParts = {}, seedByBook = {};
+    bookKeys.forEach(function(k, i){ seedByBook[k] = 11 + i*37; });
+    function buildTerritory(k){
+      var g = el("g", { class:"territory" });
+      var outer = el("path", { fill:BOOKS[k].color, opacity:0.22, stroke:BOOKS[k].color, "stroke-width":2.4 });
+      var ring1 = el("path", { fill:"none", stroke:BOOKS[k].color, "stroke-width":1.4, opacity:0.55 });
+      var ring2 = el("path", { fill:"none", stroke:BOOKS[k].color, "stroke-width":1.1, opacity:0.3 });
+      g.appendChild(outer); g.appendChild(ring1); g.appendChild(ring2);
+      viewport.appendChild(g);
+      var label = el("text", { class:"territoryLabel", "text-anchor":"middle", "font-size":15, fill:BOOKS[k].color, opacity:0.85, "font-family":"Fraunces, serif", "font-style":"italic", "font-weight":600 });
+      label.textContent = terrClip(BOOKS[k].titulo, 42);
+      var fullTitle = el("title", {});
+      fullTitle.textContent = BOOKS[k].titulo;
+      label.appendChild(fullTitle);
+      viewport.appendChild(label);
+      territoryParts[k] = { outer:outer, ring1:ring1, ring2:ring2, label:label };
+    }
+    function updateTerritory(k){
+      var pts = NODES.filter(function(n){ return n.book===k; });
+      if (!pts.length) return;
+      var ringPts = terrWavify(terrExpandedHull(pts, 30), seedByBook[k]);
+      var c0 = terrCentroid(ringPts);
+      var parts = territoryParts[k];
+      parts.outer.setAttribute("d", terrCatmullRom(ringPts));
+      parts.ring1.setAttribute("d", terrCatmullRom(terrRingPoints(ringPts, c0, 0.92)));
+      parts.ring2.setAttribute("d", terrCatmullRom(terrRingPoints(ringPts, c0, 0.82)));
+      var topY = Math.min.apply(null, pts.map(function(p){ return p.y; }));
+      parts.label.setAttribute("x", terrCentroid(pts).x);
+      parts.label.setAttribute("y", topY - 46);
+    }
+    bookKeys.forEach(function(k){ buildTerritory(k); updateTerritory(k); });
+
+    var edgeEls = {};
+    function edgePath(e){
+      var n1=byId[e.a], n2=byId[e.b];
+      if (e.bridge){
+        var mx=(n1.x+n2.x)/2, my=(n1.y+n2.y)/2, dx=mx-CX, dy=my-CY, dist=Math.sqrt(dx*dx+dy*dy)||1;
+        var cxp=mx+(dx/dist)*55, cyp=my+(dy/dist)*55;
+        return "M"+n1.x+","+n1.y+" Q"+cxp+","+cyp+" "+n2.x+","+n2.y;
+      }
+      return "M"+n1.x+","+n1.y+" L"+n2.x+","+n2.y;
+    }
+    EDGES.forEach(function(e, idx){
+      var path = el("path", {
+        d: edgePath(e),
+        stroke: e.bridge ? "#D9B166" : "rgba(237,235,222,0.16)",
+        "stroke-width": e.bridge ? 1.8 : 1.4, fill:"none", "stroke-linecap":"round"
+      });
+      viewport.appendChild(path);
+      edgeEls[idx] = { path:path, a:e.a, b:e.b, bridge:e.bridge };
+    });
+    function updateEdgePath(idx){ edgeEls[idx].path.setAttribute("d", edgePath(EDGES[idx])); }
+
+    var nodeEls = {}, selectedId = null;
+    var maxDeg = Math.max.apply(null, NODES.map(function(n){ return n.deg; }));
+
+    function renderPanel(id){
+      var panel = document.getElementById("terrPanel");
+      if (!id){ panel.innerHTML = '<div class="panelEmpty">Haz clic en una ciudad del mapa para ver su ficha, sus rutas y de qué libro viene.</div>'; return; }
+      var n = byId[id], book = BOOKS[n.book];
+      var rels = EDGES.filter(function(e){ return e.a===id||e.b===id; });
+      var relsHtml = rels.map(function(e){
+        var otherId = e.a===id?e.b:e.a, other = byId[otherId], otherBook = BOOKS[other.book];
+        return '<div class="relItem" data-goto="'+otherId+'"><span style="display:flex;align-items:center;"><span class="flag" style="background:'+otherBook.color+'"></span>'+esc(other.label)+'</span>'+(e.bridge?'<span style="color:var(--spine); font-family:\'IBM Plex Mono\',monospace; font-size:11px;">ruta</span>':'')+'</div>';
+      }).join("");
+      var bridgeHtml = rels.filter(function(e){ return e.bridge; }).map(function(e){
+        var otherId = e.a===id?e.b:e.a, other = byId[otherId], otherBook = BOOKS[other.book];
+        var explicacion = e.motivo ? esc(e.motivo) : 'Este concepto se relaciona con <strong>«'+esc(other.label)+'»</strong>, del libro <strong>'+esc(otherBook.titulo)+'</strong>.';
+        return '<div class="bridgeNote">'+explicacion+'</div>';
+      }).join("");
+      panel.innerHTML =
+        '<span class="panelBook"><span class="flag" style="background:'+book.color+'"></span>'+esc(book.titulo)+'</span>' +
+        '<h2 class="panelTerm">'+esc(n.label)+'</h2>' +
+        '<p class="panelDef">'+esc(n.def||"")+'</p>' +
+        (n.cap ? '<div class="panelSource">'+esc(n.cap)+'</div>' : '') +
+        bridgeHtml +
+        '<div class="relList">'+relsHtml+'</div>' +
+        '<button class="ghost openBookBtn" type="button" data-openbook="'+book.item.id+'">Abrir este libro →</button>';
+      panel.querySelectorAll("[data-goto]").forEach(function(row){ row.addEventListener("click", function(){ selectNode(row.getAttribute("data-goto")); }); });
+      var openBtn = panel.querySelector("[data-openbook]");
+      if (openBtn) openBtn.addEventListener("click", function(){
+        var meta = { asignatura: book.item.asignatura||"—", tema: book.item.tema||"", origChars: book.item.origChars||0, skillId: book.item.id, indexReady: true };
+        renderSkill(book.item, meta, "library");
+        document.querySelector('.tab[data-tab="resumen"]').click();
+        window.scrollTo({ top:0, behavior:"smooth" });
+      });
+    }
+    function updateHighlight(){
+      Object.keys(nodeEls).forEach(function(id){
+        var g = nodeEls[id];
+        var related = selectedId ? (id===selectedId || EDGES.some(function(e){ return (e.a===selectedId&&e.b===id)||(e.b===selectedId&&e.a===id); })) : true;
+        g.classList.toggle("dim", selectedId ? !related : false);
+        g.classList.toggle("selected", id===selectedId);
+      });
+      Object.keys(edgeEls).forEach(function(idx){
+        var e = edgeEls[idx];
+        var related = selectedId ? (e.a===selectedId||e.b===selectedId) : true;
+        e.path.style.opacity = selectedId ? (related?1:0.06) : 1;
+      });
+    }
+    function selectNode(id){ selectedId = id; updateHighlight(); renderPanel(id); }
+
+    NODES.forEach(function(n){
+      var isCapital = n.deg === maxDeg && maxDeg > 0;
+      var g = el("g", { class:"node" });
+      g.setAttribute("transform", "translate("+n.x+","+n.y+")");
+      g.style.cursor = "pointer";
+      if (isCapital){
+        var s = n.r+4;
+        g.appendChild(el("path", { d:"M0,-"+s+" L"+(s*0.28)+",-"+(s*0.28)+" L"+s+",0 L"+(s*0.28)+","+(s*0.28)+" L0,"+s+" L-"+(s*0.28)+","+(s*0.28)+" L-"+s+",0 L-"+(s*0.28)+",-"+(s*0.28)+" Z", fill:BOOKS[n.book].color, stroke:"#2A2013", "stroke-width":1 }));
+      } else {
+        g.appendChild(el("circle", { r:n.r, fill:BOOKS[n.book].color, stroke:"#2A2013", "stroke-width":1 }));
+      }
+      var label = el("text", { x:0, y:-(n.r+7), "text-anchor":"middle", "font-size":11, fill:"#FBF8EF", "font-family":"Source Sans 3, sans-serif", "font-weight":600 });
+      label.style.paintOrder = "stroke"; label.style.stroke = "#100E0A"; label.style.strokeWidth = "3px"; label.style.pointerEvents = "none";
+      label.textContent = (isCapital?"★ ":"") + terrClip(n.label, 20);
+      var nodeTitle = el("title", {});
+      nodeTitle.textContent = n.label;
+      label.appendChild(nodeTitle);
+      g.appendChild(label);
+      viewport.appendChild(g);
+      nodeEls[n.id] = g;
+
+      g.addEventListener("click", function(ev){ ev.stopPropagation(); selectNode(n.id); });
+      var dragging = false, offX=0, offY=0;
+      g.addEventListener("pointerdown", function(ev){
+        ev.stopPropagation(); ev.preventDefault();
+        dragging = true; g.setPointerCapture(ev.pointerId);
+        var pt = worldPoint(ev); offX = n.x-pt.x; offY = n.y-pt.y;
+      });
+      g.addEventListener("pointermove", function(ev){
+        if (!dragging) return;
+        ev.stopPropagation();
+        var pt = worldPoint(ev);
+        n.x = pt.x+offX; n.y = pt.y+offY;
+        g.setAttribute("transform", "translate("+n.x+","+n.y+")");
+        EDGES.forEach(function(e, idx){ if (e.a===n.id||e.b===n.id) updateEdgePath(idx); });
+        updateTerritory(n.book);
+      });
+      g.addEventListener("pointerup", function(){ dragging = false; });
+      g.addEventListener("pointerleave", function(){ dragging = false; });
+    });
+
+    function viewboxPoint(ev){
+      var rect = svg.getBoundingClientRect();
+      return { x:(ev.clientX-rect.left)/rect.width*W, y:(ev.clientY-rect.top)/rect.height*H };
+    }
+    function worldPoint(ev){ var p = viewboxPoint(ev); return { x:(p.x-view.tx)/view.scale, y:(p.y-view.ty)/view.scale }; }
+
+    var panning = false, panStart = null;
+    svg.addEventListener("pointerdown", function(ev){
+      if (ev.target.closest && ev.target.closest(".node")) return;
+      ev.preventDefault();
+      panning = true; svg.setPointerCapture(ev.pointerId);
+      panStart = { x:ev.clientX, y:ev.clientY, tx:view.tx, ty:view.ty };
+      svg.style.cursor = "grabbing";
+    });
+    svg.addEventListener("pointermove", function(ev){
+      if (!panning) return;
+      var rect = svg.getBoundingClientRect();
+      view.tx = panStart.tx + (ev.clientX-panStart.x)/rect.width*W;
+      view.ty = panStart.ty + (ev.clientY-panStart.y)/rect.height*H;
+      applyView();
+    });
+    function endPan(){ panning=false; svg.style.cursor="grab"; }
+    svg.addEventListener("pointerup", endPan);
+    svg.addEventListener("pointerleave", endPan);
+    svg.addEventListener("wheel", function(ev){
+      ev.preventDefault();
+      var p = viewboxPoint(ev);
+      var wx = (p.x-view.tx)/view.scale, wy = (p.y-view.ty)/view.scale;
+      var factor = ev.deltaY<0 ? 1.12 : 1/1.12;
+      view.scale = Math.max(0.45, Math.min(2.6, view.scale*factor));
+      view.tx = p.x - wx*view.scale; view.ty = p.y - wy*view.scale;
+      applyView();
+    }, { passive:false });
+    svg.addEventListener("click", function(ev){
+      if (ev.target.closest && ev.target.closest(".node")) return;
+      selectedId = null; updateHighlight(); renderPanel(null);
+    });
+    document.getElementById("terrResetBtn").onclick = function(){ view.tx=0; view.ty=0; view.scale=1; applyView(); };
+
+    var bridgeCount = EDGES.filter(function(e){ return e.bridge; }).length;
+    document.getElementById("terrStatStrip").innerHTML =
+      stat(bookKeys.length, "territorios (libros)") +
+      stat(NODES.length, "ciudades (conceptos)") +
+      stat(EDGES.length-bridgeCount, "carreteras internas") +
+      stat(bridgeCount, "rutas entre lecturas");
+
+    var legend = document.getElementById("terrLegend");
+    var hidden = {};
+    bookKeys.forEach(function(k){
+      var count = NODES.filter(function(n){ return n.book===k; }).length;
+      var chip = document.createElement("button");
+      chip.type = "button"; chip.className = "terrLegendChip";
+      chip.title = BOOKS[k].titulo;
+      chip.innerHTML = '<span class="flag" style="background:'+BOOKS[k].color+'"></span>'+esc(terrClip(BOOKS[k].titulo, 34))+' <span class="ct">'+count+'</span>';
+      chip.addEventListener("click", function(){
+        hidden[k] = !hidden[k];
+        chip.classList.toggle("dim", !!hidden[k]);
+        territoryParts[k].outer.parentNode.style.display = hidden[k] ? "none" : "";
+        NODES.forEach(function(n){ if (n.book===k) nodeEls[n.id].style.display = hidden[k] ? "none" : ""; });
+        Object.keys(edgeEls).forEach(function(idx){
+          var e = edgeEls[idx], a = byId[e.a], b = byId[e.b];
+          e.path.style.display = (hidden[a.book]||hidden[b.book]) ? "none" : "";
+        });
+      });
+      legend.appendChild(chip);
+    });
+    var bridgeChip = document.createElement("div");
+    bridgeChip.className = "terrLegendChip bridgeChip";
+    bridgeChip.innerHTML = '<span class="flag"></span>Rutas entre lecturas <span class="ct">'+bridgeCount+'</span>';
+    legend.appendChild(bridgeChip);
+
+    renderPanel(null);
+  }
+
+  loadLibrary();
+
+})();
+</script>
+</body>
+</html>
